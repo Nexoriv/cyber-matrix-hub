@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cyber Matrix Hub</title>
+
+<style>
+body{
+margin:0;
+overflow:hidden;
+background:black;
+font-family:monospace;
+color:#00ffcc;
+}
+
+/* MATRIX CANVAS */
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
+
+/* HEADER */
+header{
+text-align:center;
+padding:15px;
+font-size:26px;
+letter-spacing:3px;
+border-bottom:1px solid #00ffcc33;
+background:rgba(0,0,0,0.6);
+}
+
+/* LAYOUT */
+.container{
+position:relative;
+z-index:2;
+padding:20px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:15px;
+}
+
+/* CARDS */
+.card{
+background:rgba(0,0,0,0.7);
+border:1px solid #00ffcc33;
+padding:15px;
+border-radius:10px;
+backdrop-filter:blur(6px);
+transition:0.3s;
+}
+
+.card:hover{
+transform:scale(1.03);
+box-shadow:0 0 15px #00ffcc55;
+border-color:#00ffcc;
+}
+
+/* INPUTS */
+input, textarea{
+width:100%;
+margin-top:8px;
+padding:10px;
+background:black;
+border:1px solid #00ffcc33;
+color:#00ffcc;
+border-radius:6px;
+outline:none;
+}
+
+/* BUTTONS */
+button{
+width:100%;
+margin-top:10px;
+padding:10px;
+background:transparent;
+border:1px solid #00ffcc;
+color:#00ffcc;
+cursor:pointer;
+border-radius:6px;
+transition:0.3s;
+}
+
+button:hover{
+background:#00ffcc;
+color:black;
+}
+
+ul{
+padding-left:18px;
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas>
+
+<header>⚡ CYBER MATRIX HUB ⚡</header>
+
+<div class="container">
+
+<!-- PASSWORD -->
+<div class="card">
+<h3>Password Generator</h3>
+<p id="pass">Click generate</p>
+<button onclick="genPass()">Generate</button>
+</div>
+
+<!-- TEMP EMAIL -->
+<div class="card">
+<h3>Temporary Email</h3>
+<button onclick="window.open('https://temp-mail.org')">Open Tool</button>
+</div>
+
+<!-- FAKE IDENTITY -->
+<div class="card">
+<h3>Fake Identity</h3>
+<button onclick="window.open('https://www.fakenamegenerator.com')">Open Tool</button>
+</div>
+
+<!-- QR CODE -->
+<div class="card">
+<h3>QR Generator</h3>
+<input id="qrText" placeholder="Enter text or link">
+<button onclick="makeQR()">Generate QR</button>
+<img id="qrImg" style="width:150px;margin-top:10px;">
+</div>
+
+<!-- NOTES -->
+<div class="card">
+<h3>Quick Notes</h3>
+<textarea id="note" rows="5"></textarea>
+<button onclick="saveNote()">Save</button>
+<button onclick="loadNote()">Load</button>
+</div>
+
+<!-- TODO -->
+<div class="card">
+<h3>To-Do List</h3>
+<input id="task" placeholder="Enter task">
+<button onclick="addTask()">Add</button>
+<ul id="list"></ul>
+</div>
+
+</div>
+
+<script>
+
+/* PASSWORD */
+function genPass(){
+let chars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*";
+let pass="";
+for(let i=0;i<12;i++){
+pass+=chars[Math.floor(Math.random()*chars.length)];
+}
+document.getElementById("pass").innerText=pass;
+}
+
+/* QR */
+function makeQR(){
+let text=document.getElementById("qrText").value;
+if(!text) return alert("Enter text");
+document.getElementById("qrImg").src=
+"https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="+encodeURIComponent(text);
+}
+
+/* NOTES */
+function saveNote(){
+localStorage.setItem("note",document.getElementById("note").value);
+}
+
+function loadNote(){
+document.getElementById("note").value=localStorage.getItem("note")||"";
+}
+
+/* TODO */
+function addTask(){
+let t=document.getElementById("task").value;
+if(!t) return;
+
+let li=document.createElement("li");
+li.innerText=t;
+li.onclick=()=>li.remove();
+
+document.getElementById("list").appendChild(li);
+document.getElementById("task").value="";
+}
+
+/* MATRIX (same old working effect) */
+const canvas=document.getElementById("matrix");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let letters="01ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%^&*";
+letters=letters.split("");
+
+let fontSize=14;
+let columns=canvas.width/fontSize;
+
+let drops=[];
+
+for(let i=0;i<columns;i++){
+drops[i]=1;
+}
+
+function draw(){
+ctx.fillStyle="rgba(0,0,0,0.08)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="#00ffcc";
+ctx.font=fontSize+"px monospace";
+
+for(let i=0;i<drops.length;i++){
+let text=letters[Math.floor(Math.random()*letters.length)];
+ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+
+if(drops[i]*fontSize>canvas.height && Math.random()>0.975){
+drops[i]=0;
+}
+
+drops[i]++;
+}
+}
+
+setInterval(draw,33);
+
+</script>
+
+</body>
+</html>

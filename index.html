@@ -1,93 +1,137 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Cyber Matrix Hub</title>
+<title>Cyber Tools</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
 
 <style>
+
+/* BACKGROUND */
 body{
 margin:0;
-overflow:hidden;
-background:black;
-font-family:monospace;
-color:#00ffcc;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#0f172a,#1e3a8a);
+color:white;
 }
 
-/* MATRIX CANVAS */
-canvas{
-position:fixed;
-top:0;
-left:0;
-z-index:-1;
+/* NAVBAR */
+nav{
+display:flex;
+justify-content:space-between;
+padding:15px 40px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
 }
 
-/* HEADER */
+nav h2{
+margin:0;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin-left:20px;
+opacity:0.8;
+}
+
+nav a:hover{
+opacity:1;
+}
+
+/* HERO */
 header{
 text-align:center;
-padding:15px;
-font-size:26px;
-letter-spacing:3px;
-border-bottom:1px solid #00ffcc33;
-background:rgba(0,0,0,0.6);
+padding:40px 20px 10px;
 }
 
-/* LAYOUT */
-.container{
-position:relative;
-z-index:2;
-padding:20px;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:15px;
+header h1{
+font-size:42px;
+margin:0;
 }
 
-/* CARDS */
+header span{
+color:#60a5fa;
+}
+
+header p{
+opacity:0.7;
+}
+
+/* STATS */
+.stats{
+display:flex;
+justify-content:center;
+gap:40px;
+margin:20px 0;
+}
+
+.stat{
+text-align:center;
+}
+
+.stat h3{
+margin:0;
+color:#60a5fa;
+}
+
+/* SWIPER */
+.swiper{
+height:70vh;
+display:flex;
+align-items:center;
+}
+
+/* CARD */
 .card{
-background:rgba(0,0,0,0.7);
-border:1px solid #00ffcc33;
-padding:15px;
-border-radius:10px;
-backdrop-filter:blur(6px);
+background:rgba(255,255,255,0.08);
+border-radius:18px;
+padding:20px;
+width:260px;
+backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,0.15);
 transition:0.3s;
 }
 
 .card:hover{
-transform:scale(1.03);
-box-shadow:0 0 15px #00ffcc55;
-border-color:#00ffcc;
+transform:translateY(-10px) scale(1.05);
 }
 
-/* INPUTS */
+/* ICON */
+.icon{
+font-size:28px;
+margin-bottom:10px;
+}
+
+/* INPUT */
 input, textarea{
 width:100%;
-margin-top:8px;
+margin-top:10px;
 padding:10px;
-background:black;
-border:1px solid #00ffcc33;
-color:#00ffcc;
-border-radius:6px;
-outline:none;
+border-radius:8px;
+border:none;
+background:rgba(255,255,255,0.1);
+color:white;
 }
 
-/* BUTTONS */
+/* BUTTON */
 button{
 width:100%;
 margin-top:10px;
 padding:10px;
-background:transparent;
-border:1px solid #00ffcc;
-color:#00ffcc;
+border-radius:8px;
+border:none;
+background:#2563eb;
+color:white;
 cursor:pointer;
-border-radius:6px;
-transition:0.3s;
 }
 
 button:hover{
-background:#00ffcc;
-color:black;
+background:#1d4ed8;
 }
 
 ul{
-padding-left:18px;
+text-align:left;
 }
 
 </style>
@@ -95,58 +139,108 @@ padding-left:18px;
 
 <body>
 
-<canvas id="matrix"></canvas>
+<!-- NAVBAR -->
+<nav>
+<h2>⚡ Cyber Tools</h2>
+<div>
+<a href="#">Home</a>
+<a href="#">Tools</a>
+<a href="#">About</a>
+</div>
+</nav>
 
-<header>⚡ CYBER MATRIX HUB ⚡</header>
+<!-- HERO -->
+<header>
+<h1>Powerful <span>Digital Tools</span> in One Place</h1>
+<p>Simple, fast and useful tools for your daily work</p>
+</header>
 
-<div class="container">
+<!-- STATS -->
+<div class="stats">
+<div class="stat">
+<h3>10+</h3>
+<p>Tools</p>
+</div>
 
-<!-- PASSWORD -->
-<div class="card">
+<div class="stat">
+<h3>100%</h3>
+<p>Free</p>
+</div>
+
+<div class="stat">
+<h3>Fast</h3>
+<p>Performance</p>
+</div>
+</div>
+
+<!-- SLIDER -->
+<div class="swiper mySwiper">
+<div class="swiper-wrapper">
+
+<div class="swiper-slide card">
+<div class="icon">🔐</div>
 <h3>Password Generator</h3>
 <p id="pass">Click generate</p>
 <button onclick="genPass()">Generate</button>
 </div>
 
-<!-- TEMP EMAIL -->
-<div class="card">
+<div class="swiper-slide card">
+<div class="icon">📧</div>
 <h3>Temporary Email</h3>
 <button onclick="window.open('https://temp-mail.org')">Open Tool</button>
 </div>
 
-<!-- FAKE IDENTITY -->
-<div class="card">
+<div class="swiper-slide card">
+<div class="icon">🧑</div>
 <h3>Fake Identity</h3>
 <button onclick="window.open('https://www.fakenamegenerator.com')">Open Tool</button>
 </div>
 
-<!-- QR CODE -->
-<div class="card">
+<div class="swiper-slide card">
+<div class="icon">🔳</div>
 <h3>QR Generator</h3>
-<input id="qrText" placeholder="Enter text or link">
-<button onclick="makeQR()">Generate QR</button>
-<img id="qrImg" style="width:150px;margin-top:10px;">
+<input id="qrText" placeholder="Enter text">
+<button onclick="makeQR()">Generate</button>
+<img id="qrImg" width="120">
 </div>
 
-<!-- NOTES -->
-<div class="card">
+<div class="swiper-slide card">
+<div class="icon">📝</div>
 <h3>Quick Notes</h3>
-<textarea id="note" rows="5"></textarea>
+<textarea id="note"></textarea>
 <button onclick="saveNote()">Save</button>
 <button onclick="loadNote()">Load</button>
 </div>
 
-<!-- TODO -->
-<div class="card">
+<div class="swiper-slide card">
+<div class="icon">✅</div>
 <h3>To-Do List</h3>
-<input id="task" placeholder="Enter task">
+<input id="task">
 <button onclick="addTask()">Add</button>
 <ul id="list"></ul>
 </div>
 
 </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
 <script>
+
+new Swiper(".mySwiper", {
+effect:"coverflow",
+grabCursor:true,
+centeredSlides:true,
+slidesPerView:"auto",
+loop:false,
+
+coverflowEffect:{
+rotate:12,
+depth:100,
+modifier:1,
+slideShadows:false,
+},
+});
 
 /* PASSWORD */
 function genPass(){
@@ -170,7 +264,6 @@ document.getElementById("qrImg").src=
 function saveNote(){
 localStorage.setItem("note",document.getElementById("note").value);
 }
-
 function loadNote(){
 document.getElementById("note").value=localStorage.getItem("note")||"";
 }
@@ -187,46 +280,6 @@ li.onclick=()=>li.remove();
 document.getElementById("list").appendChild(li);
 document.getElementById("task").value="";
 }
-
-/* MATRIX (same old working effect) */
-const canvas=document.getElementById("matrix");
-const ctx=canvas.getContext("2d");
-
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-
-let letters="01ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%^&*";
-letters=letters.split("");
-
-let fontSize=14;
-let columns=canvas.width/fontSize;
-
-let drops=[];
-
-for(let i=0;i<columns;i++){
-drops[i]=1;
-}
-
-function draw(){
-ctx.fillStyle="rgba(0,0,0,0.08)";
-ctx.fillRect(0,0,canvas.width,canvas.height);
-
-ctx.fillStyle="#00ffcc";
-ctx.font=fontSize+"px monospace";
-
-for(let i=0;i<drops.length;i++){
-let text=letters[Math.floor(Math.random()*letters.length)];
-ctx.fillText(text,i*fontSize,drops[i]*fontSize);
-
-if(drops[i]*fontSize>canvas.height && Math.random()>0.975){
-drops[i]=0;
-}
-
-drops[i]++;
-}
-}
-
-setInterval(draw,33);
 
 </script>
 
